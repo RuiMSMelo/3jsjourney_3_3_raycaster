@@ -140,11 +140,12 @@ scene.add(directionalLight)
 /**
  * Model
  */
+let model = null
 const gltfLoader = new GLTFLoader()
 gltfLoader.load("./models/Duck/glTF-Binary/Duck.glb", (gltf) => {
-	console.log(gltf)
-	gltf.scene.position.y = -1
-	scene.add(gltf.scene)
+	model = gltf.scene
+	model.position.y = -1
+	scene.add(model)
 })
 
 /**
@@ -204,6 +205,15 @@ const tick = () => {
 			console.log("mouse leave")
 		}
 		currentIntersect = null
+	}
+
+	// Test intersect with model
+	if (model !== null) {
+		const modelIntersects = raycaster.intersectObject(model)
+		//check if mouse is hovering duck
+		if (modelIntersects.length) {
+			console.log("duck")
+		}
 	}
 
 	// Update controls
